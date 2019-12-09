@@ -1,0 +1,171 @@
+{
+  "type": "object",
+  "required": [
+    "unit_amount",
+    "unit_quantity",
+    "stops"
+  ],
+  "properties": {
+    "create_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10
+    },
+    "unit_amount": {
+      "type": "number",
+      "format": "float",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Cost of one unit of the line item"
+    },
+    "unit_quantity": {
+      "type": "integer",
+      "format": "int32",
+      "default": 1
+    },
+    "unit_amount_currency": {
+      "type": "string",
+      "default": "USD",
+      "enum": [
+        "CAD",
+        "USD"
+      ]
+    },
+    "charge_code": {
+      "type": "object",
+      "description": "Standardized code for a type of line item charge",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "accessorials": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "Accessorial code, price, and description",
+        "required": [
+          "id",
+          "is_charge_code",
+          "price",
+          "currency_unit"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "is_charge_code": {
+            "type": "boolean"
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          },
+          "currency_unit": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "stops": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "address"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "company": {
+      "type": "object",
+      "required": [
+        "brokerage"
+      ],
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "name",
+            "dba_name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "dba_name": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "carrier"
+          ],
+          "properties": {
+            "carrier": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "fire"
+      ],
+      "properties": {
+        "fire": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "ice"
+      ],
+      "properties": {
+        "ice": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    }
+  ]
+}
