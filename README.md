@@ -17,14 +17,14 @@ createValidationSchema(schema, options);
 
 ### Arguments
 |Argument       | Type  | Description   |
-|-------------- | --- |---|---|
+|-------------- | --- |---|
 |schema      | Object | A valid JSON schema conforming to [JSON schema](https://json-schema.org/) specifications. |
 | customValidationFields | Object | Custom Yup mappings for schema properties |
 
 ### Options
 
 |Property       | Type  | Description   |
-|-------------- | --- |---|---|
+|-------------- | --- |---|
 |blackList      | Array | A list of fields to omit from the schema. |
 |customValidationFields | Object | Custom Yup mappings for schema properties |
 |validationTypes| Object | Custom Yup mappings for schema types. |
