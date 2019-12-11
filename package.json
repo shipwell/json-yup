@@ -1,8 +1,7 @@
 {
   "name": "json-yup",
-  "version": "1.0.0",
   "description": "A JSON schema parser for Yup",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "start": "node -r esm ./src/index.js",
     "build": "webpack --config webpack.config.js",
@@ -22,7 +21,7 @@
   "license": "MIT",
   "author": "Shipwell",
   "files": [
-    "dist",
+    "dist/index.js",
     "package.json"
   ],
   "peerDependencies": {
@@ -64,5 +63,14 @@
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.0",
     "yup": "^0.27.0"
-  }
+  },
+  "version": "1.0.1",
+  "keywords": [
+    "yup",
+    "yup-validation",
+    "json-schema",
+    "json-validation",
+    "json-schema-validation",
+    "javascript"
+  ]
 }
