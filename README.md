@@ -2,7 +2,7 @@
 [![npm](https://img.shields.io/npm/v/json-yup.svg?style=flat-square)](https://www.npmjs.com/package/react-native-calendar-events)
 [![npm](https://img.shields.io/npm/l/json-yup.svg?style=flat-square)](https://github.com/wmcmahan/react-native-calendar-events/blob/master/LICENSE.md)
 
-A tiny utility for converting a [JSON schema](https://json-schema.org/) into [Yup](https://github.com/jquense/yup) schema.
+A simple utility for converting a [JSON schema](https://json-schema.org/) into [Yup](https://github.com/jquense/yup) schema.
 
 ## Setup
 ```
