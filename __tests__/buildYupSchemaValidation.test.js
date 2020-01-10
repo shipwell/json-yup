@@ -102,7 +102,10 @@ describe('Schema validation builder', () => {
 
   it('should validate against required array item fields', async () => {
     try {
-      await validationSchema.validate({accessorials: [{}], unit_amount: 'asb'}, {abortEarly: false});
+      await validationSchema.validate(
+        {accessorials: [{}], unit_amount: 'asb'},
+        {abortEarly: false}
+      );
     } catch (error) {
       expect(error.inner.map(error => error.path)).toEqual(
         expect.arrayContaining([
@@ -121,7 +124,37 @@ describe('Schema validation builder', () => {
     }
   });
 
-  it('should validate against required array field', async () => {
+  it.only('should validate against minimum array item fields', async () => {
+    try {
+      await validationSchema.validate(
+        {stops: [{name: 'stopName1', address: 'stopAddress1'}]},
+        {abortEarly: false}
+      );
+    } catch (error) {
+      expect(error.inner.map(error => error.path)).toEqual(
+        expect.arrayContaining(['stops'])
+      );
+      expect(error.inner.find(error => error.path === 'stops').type).toEqual('min');
+    }
+    try {
+      await validationSchema.validate(
+        {
+          stops: [
+            {name: 'stopName1', address: 'stopAddress1'},
+            {name: 'stopName2', address: 'stopAddress2'}
+          ]
+        },
+        {abortEarly: false}
+      );
+    } catch (error) {
+      expect(error.inner.map(error => error.path)).not.toEqual(
+        expect.arrayContaining(['stops'])
+      );
+      expect(error.inner.find(error => error.path === 'stops')).toBeUndefined();
+    }
+  });
+
+  it.only('should validate against required array field', async () => {
     try {
       await validationSchema.validate({}, {abortEarly: false});
     } catch (error) {
@@ -131,8 +164,9 @@ describe('Schema validation builder', () => {
       expect(error.inner.find(error => error.path === 'stops').type).toEqual('required');
     }
     try {
-      await validationSchema.validate({stops: [{}]}, {abortEarly: false});
+      await validationSchema.validate({stops: [{name: 'stopName1', address: 'stopAddress1'}, {name: 'stopName2', address: 'stopAddress2'}]}, {abortEarly: false});
     } catch (error) {
+      console.log(error);
       expect(error.inner.map(error => error.path)).not.toEqual(
         expect.arrayContaining(['stops'])
       );
