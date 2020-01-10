@@ -164,9 +164,16 @@ describe('Schema validation builder', () => {
       expect(error.inner.find(error => error.path === 'stops').type).toEqual('required');
     }
     try {
-      await validationSchema.validate({stops: [{name: 'stopName1', address: 'stopAddress1'}, {name: 'stopName2', address: 'stopAddress2'}]}, {abortEarly: false});
+      await validationSchema.validate(
+        {
+          stops: [
+            {name: 'stopName1', address: 'stopAddress1'},
+            {name: 'stopName2', address: 'stopAddress2'}
+          ]
+        },
+        {abortEarly: false}
+      );
     } catch (error) {
-      console.log(error);
       expect(error.inner.map(error => error.path)).not.toEqual(
         expect.arrayContaining(['stops'])
       );
