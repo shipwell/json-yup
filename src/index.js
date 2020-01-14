@@ -82,6 +82,7 @@ export const buildYupSchemaValidation = (jsonSchema, opts = {}) => {
         Object.prototype.hasOwnProperty.call(fields[field], 'items') &&
         !customValidationFields[field]
       ) {
+        const {minItems} = fields[field];
         const {required = []} = fields[field].items;
         const yupObj = yup
           .object()
@@ -89,6 +90,10 @@ export const buildYupSchemaValidation = (jsonSchema, opts = {}) => {
 
         fields[field] = yup.array().of(yupObj);
         stack.push(yupObj.fields);
+
+        if (minItems) {
+          fields[field] = fields[field].min(minItems);
+        }
 
         if (requiredFields.has(getPath(schema.properties, fields[field]))) {
           fields[field] = fields[field].required();
