@@ -124,7 +124,7 @@ describe('Schema validation builder', () => {
     }
   });
 
-  it.only('should validate against minimum array item fields', async () => {
+  it('should validate against minimum array item fields', async () => {
     try {
       await validationSchema.validate(
         {stops: [{name: 'stopName1', address: 'stopAddress1'}]},
@@ -154,7 +154,45 @@ describe('Schema validation builder', () => {
     }
   });
 
-  it.only('should validate against required array field', async () => {
+  it('should validate against maximum array item fields', async () => {
+    try {
+      await validationSchema.validate(
+        {
+          stops: [
+            {name: 'stopName1', address: 'stopAddress1'},
+            {name: 'stopName2', address: 'stopAddress2'},
+            {name: 'stopName3', address: 'stopAddress3'},
+            {name: 'stopName4', address: 'stopAddress4'}
+          ]
+        },
+        {abortEarly: false}
+      );
+    } catch (error) {
+      expect(error.inner.map(error => error.path)).toEqual(
+        expect.arrayContaining(['stops'])
+      );
+      expect(error.inner.find(error => error.path === 'stops').type).toEqual('max');
+    }
+    try {
+      await validationSchema.validate(
+        {
+          stops: [
+            {name: 'stopName1', address: 'stopAddress1'},
+            {name: 'stopName2', address: 'stopAddress2'},
+            {name: 'stopName3', address: 'stopAddress3'}
+          ]
+        },
+        {abortEarly: false}
+      );
+    } catch (error) {
+      expect(error.inner.map(error => error.path)).not.toEqual(
+        expect.arrayContaining(['stops'])
+      );
+      expect(error.inner.find(error => error.path === 'stops')).toBeUndefined();
+    }
+  });
+
+  it('should validate against required array field', async () => {
     try {
       await validationSchema.validate({}, {abortEarly: false});
     } catch (error) {

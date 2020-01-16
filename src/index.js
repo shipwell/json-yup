@@ -82,7 +82,7 @@ export const buildYupSchemaValidation = (jsonSchema, opts = {}) => {
         Object.prototype.hasOwnProperty.call(fields[field], 'items') &&
         !customValidationFields[field]
       ) {
-        const {minItems} = fields[field];
+        const {minItems, maxItems} = fields[field];
         const {required = []} = fields[field].items;
         const yupObj = yup
           .object()
@@ -94,7 +94,9 @@ export const buildYupSchemaValidation = (jsonSchema, opts = {}) => {
         if (minItems) {
           fields[field] = fields[field].min(minItems);
         }
-
+        if (maxItems) {
+          fields[field] = fields[field].max(maxItems);
+        }
         if (requiredFields.has(getPath(schema.properties, fields[field]))) {
           fields[field] = fields[field].required();
         }
